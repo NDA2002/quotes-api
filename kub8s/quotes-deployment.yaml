@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quotes-api
+  template:
+    metadata:
+      labels:
+        app: quotes-api
+    spec:
+      containers:
+        - name: quotes-api
+          image: nitishpaul/quotes-api:1.0
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quotes-api-svc
+spec:
+  selector:
+    app: quotes-api
+  ports:
+    - port: 80
+      targetPort: 3000
